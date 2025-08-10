@@ -4,6 +4,7 @@ import Image from "next/image";
 import SearchBox from "../helper/SearchBox";
 import { HeartIcon, UserIcon } from "lucide-react";
 import ShoppingCartButton from "../helper/ShoppingCartButton";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 const Nav = () => {
   return (
@@ -15,9 +16,22 @@ const Nav = () => {
         </Link>
         <div className="flex items-center space-x-6">
           <SearchBox /> {/*Component*/}
-          <HeartIcon size="26" cursor="pointer" />
+          <HeartIcon size="26" cursor="pointer" /> {/*Icon*/}
           <ShoppingCartButton /> {/*Component*/}
-          <UserIcon size="26" cursor="pointer" />
+          {/*▼ User button ▼ */}
+          {/*▼ SignIn user  ▼ */}
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          {/*▲ SignIn user  ▲*/}
+          {/*▼ Not SignIn ▼ */}
+          <SignedOut>
+            <SignInButton>
+              <UserIcon size={26} cursor={"pointer"} />
+            </SignInButton>
+          </SignedOut>
+          {/*▲ Not SignIn  ▲*/}
+          {/*▲ User button ▲*/}
         </div>
       </div>
     </div>
