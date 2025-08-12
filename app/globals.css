@@ -7,8 +7,14 @@
     text-wrap: balance;
   }
 }
-body {
-  font-family: var(--font-inter), sans-serif;
+
+@layer components {
+  .footer__title{
+    @apply text-xl text-black mb-6;
+  }
+  .footer__link {
+    @apply text-black text-[15px] opacity-90 mb-4 w-fit cursor-pointer hover:text-yellow-600;
+  }
 }
 
 @layer base {
@@ -74,4 +80,7 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+body {
+  font-family: var(--font-inter), sans-serif;
 }
