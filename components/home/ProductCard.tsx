@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/typing";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag, StarIcon } from "lucide-react";
@@ -10,19 +10,29 @@ type Props = {
   product: Product;
 };
 
+function normalizeImageUrl(url: string) {
+  if (url.includes("_t.png")) return url;
+  return url.replace(/_?\.(jpe?g|png)$/i, "_t.png");
+}
+
 const ProductCard = ({ product }: Props) => {
+  const [src, setSrc] = useState(() => normalizeImageUrl(product.image));
+
   const ratingArry = Array(Math.round(product.rating?.rate || 0)).fill(0);
 
   return (
     <div className="p-4">
+      <p className="text-xs break-all">{src}</p>
+
       {/* Image */}
       <div className="w-[200px] h-[150px]">
         <Image
-          src={product.image}
+          src={src}
           alt={product.title}
           width={100}
           height={100}
           className="w-[80%] h-[80%] object-contain"
+          onError={() => setSrc(product.image)}
         />
       </div>
       {/* Category */}

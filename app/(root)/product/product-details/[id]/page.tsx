@@ -1,7 +1,7 @@
 import { getProductByCategory, getSingleProduct } from "@/request/requests";
 import { Product } from "@/typing";
 import React from "react";
-import Image from "next/image"; 
+import Image from "next/image";
 import { StarIcon } from "lucide-react";
 import AddToCart from "./add-cart";
 import ProductCard from "@/components/home/ProductCard";
