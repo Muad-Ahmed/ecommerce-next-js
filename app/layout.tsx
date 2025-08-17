@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "../components/home/Nav";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/home/Footer";
+import StoreProvider from "@/StoreProvider/StoreProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,14 +23,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${inter.variable} antialiased`}>
-          <Nav />
-          {children}
-          <Footer/>
-        </body>
-      </html>
-    </ClerkProvider>
+    <StoreProvider>
+      <ClerkProvider>
+        <html lang="en">
+          <body className={`${inter.variable} antialiased`}>
+            <Nav />
+            {children}
+            <Footer />
+          </body>
+        </html>
+      </ClerkProvider>
+    </StoreProvider>
   );
 }
