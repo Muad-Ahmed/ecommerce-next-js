@@ -5,11 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag, StarIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "@/store/cartSlice";
+import { RootState } from "@/store/store";
 
 type Props = {
   product: Product;
 };
 
+// This function convert the URLs ended with'jpg' into 't.png' due to the changes in "fakestoreapi.com"
 function normalizeImageUrl(url: string) {
   if (url.includes("_t.png")) return url;
   return url.replace(/_?\.(jpe?g|png)$/i, "_t.png");
@@ -17,8 +21,15 @@ function normalizeImageUrl(url: string) {
 
 const ProductCard = ({ product }: Props) => {
   const [src, setSrc] = useState(() => normalizeImageUrl(product.image));
-
   const ratingArry = Array(Math.round(product.rating?.rate || 0)).fill(0);
+  
+  const items = useSelector((state:RootState) => state.cart.items)
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = (product: Product) => {
+    dispatch(addItem(product));
+  };
 
   return (
     <div className="p-4">
@@ -72,7 +83,7 @@ const ProductCard = ({ product }: Props) => {
       </div>
       {/* Buttons */}
       <div className="mt-4 flex items-center space-x-2">
-        <Button size={"icon"}>
+        <Button size={"icon"} onClick={() => addToCartHandler(product)}>
           <ShoppingBag size={18} />
         </Button>
         <Button size={"icon"} className="bg-red-500">
