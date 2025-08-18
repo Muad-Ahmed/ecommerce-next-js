@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag, StarIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "@/store/cartSlice";
-import { RootState } from "@/store/store";
 
 type Props = {
   product: Product;
@@ -22,8 +21,7 @@ function normalizeImageUrl(url: string) {
 const ProductCard = ({ product }: Props) => {
   const [src, setSrc] = useState(() => normalizeImageUrl(product.image));
   const ratingArry = Array(Math.round(product.rating?.rate || 0)).fill(0);
-  
-  const items = useSelector((state:RootState) => state.cart.items)
+
 
   const dispatch = useDispatch();
 
@@ -33,7 +31,6 @@ const ProductCard = ({ product }: Props) => {
 
   return (
     <div className="p-4">
-      <p className="text-xs break-all">{src}</p>
 
       {/* Image */}
       <div className="w-[200px] h-[150px]">
