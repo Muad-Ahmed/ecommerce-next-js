@@ -7,6 +7,7 @@ import { Heart, ShoppingBag, StarIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/store/cartSlice";
+import { toast } from "sonner";
 
 type Props = {
   product: Product;
@@ -22,16 +23,16 @@ const ProductCard = ({ product }: Props) => {
   const [src, setSrc] = useState(() => normalizeImageUrl(product.image));
   const ratingArry = Array(Math.round(product.rating?.rate || 0)).fill(0);
 
-
   const dispatch = useDispatch();
 
   const addToCartHandler = (product: Product) => {
     dispatch(addItem(product));
+    toast.success("Item Added to Cart");
+   
   };
 
   return (
     <div className="p-4">
-
       {/* Image */}
       <div className="w-[200px] h-[150px]">
         <Image
