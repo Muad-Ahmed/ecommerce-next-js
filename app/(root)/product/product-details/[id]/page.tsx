@@ -80,7 +80,7 @@ const ProductDetails = async ({ params }: { params: { id: string } }) => {
           </p>
 
           {/* AddToCart button */}
-          <AddToCart />
+          <AddToCart product={singleProduct} />
         </div>
       </div>
 
