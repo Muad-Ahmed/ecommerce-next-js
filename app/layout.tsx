@@ -5,6 +5,7 @@ import Nav from "../components/home/Nav";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/home/Footer";
 import StoreProvider from "@/StoreProvider/StoreProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
           <body className={`${inter.variable} antialiased`}>
             <Nav />
             {children}
+            <Toaster richColors />
             <Footer />
           </body>
         </html>
