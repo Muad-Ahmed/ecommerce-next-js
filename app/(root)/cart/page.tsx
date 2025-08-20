@@ -1,14 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { addItem, CartItem, removeItem } from "@/store/cartSlice";
 import { RootState } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   // Get our cart items
   const items = useSelector((rootState: RootState) => rootState.cart.items);
   // Calculate total quantity
@@ -24,6 +26,15 @@ const Cart = () => {
 
   // Get authenticate user
   const { user } = useUser();
+
+  // Add item
+  const addItemHandler = (item: CartItem) => {
+    dispatch(addItem(item));
+  };
+  // Remove item
+  const removeItemHandler = (id: number) => {
+    dispatch(removeItem({ id }));
+  };
 
   return (
     <div className="mt-8 min-h-[60vh]">
@@ -48,7 +59,7 @@ const Cart = () => {
         <div className="md:w-4/5 w-[95%] mx-auto grid grid-cols-1 xl:grid-cols-6 gap-16">
           {/* Cart Items */}
           <div className="rounded-lg shadow-md overflow-hidden xl:col-span-4">
-            <h1 className="p-4 text-xl mb-5 sm:text-2xl md:text-3xl font-bold text-white bg-blue-700">
+            <h1 className="p-4 text-xl mb-5  md:text-2xl font-bold text-white bg-blue-700">
               Your Cart ({totalQuantity} Items)
             </h1>
             {items.map((item) => {
@@ -67,21 +78,28 @@ const Cart = () => {
                       />
                     </div>
                     <div>
-                      <h1 className="md:text-xl text-base font-bold text-black">
+                      <h1 className="md:text-lg text-sm font-bold text-black">
                         {item.title}
                       </h1>
-                      <h1 className="md:text-lg text-sm font-semibold">
+                      <h1 className="md:text-base mt-1 text-xs font-semibold">
                         Category : {item.category}
                       </h1>
-                      <h1 className="md:text-2xl text-lg font-bold text-blue-950">
+                      <h1 className="md:text-xl  mt-1 text-base font-bold text-blue-950">
                         ${item.price}
                       </h1>
-                      <h1 className="md:text-lg text-sm font-semibold">
+                      <h1 className="md:text-base  mt-1 text-xs font-semibold">
                         Quantity : {item.quantity}
                       </h1>
-                      <div className="flex items-center mt-4 space-x-2">
-                        <Button>Add More</Button>
-                        <Button variant={"destructive"}>Remove</Button>
+                      <div className="flex items-center mt-3 space-x-2">
+                        <Button onClick={() => addItemHandler(item)}>
+                          Add More
+                        </Button>
+                        <Button
+                          variant={"destructive"}
+                          onClick={() => removeItemHandler(item.id)}
+                        >
+                          Remove
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -97,21 +115,21 @@ const Cart = () => {
               </h1>
               <div className="w-full h-[1.2px] bg-white bg-opacity-20"></div>
               <div
-                className="flex mt-4 text-xl uppercase font-semibold text-white items-center
+                className="flex mt-4 text-lg uppercase font-semibold text-white items-center
                 justify-between"
               >
                 <span>Subtotal</span>
                 <span>${totalPrice}</span>
               </div>
               <div
-                className="flex mt-10 mb-10 text-xl uppercase font-semibold text-white items-center
+                className="flex mt-7 mb-7 text-lg uppercase font-semibold text-white items-center
                 justify-between"
               >
                 <span>Vat</span>
                 <span>${vat}</span>
               </div>
               <div
-                className="flex mt-6 mb-4 text-xl uppercase font-semibold text-white items-center
+                className="flex mt-6 mb-4 text-lg uppercase font-semibold text-white items-center
                 justify-between"
               >
                 <span>Shipping</span>
@@ -119,7 +137,7 @@ const Cart = () => {
               </div>
               <div className="w-full h-[1.2px] bg-white bg-opacity-20"></div>
               <div
-                className="flex mt-6 mb-6 text-xl uppercase font-semibold text-white items-center
+                className="flex mt-6 mb-6 text-lg uppercase font-semibold text-white items-center
                 justify-between"
               >
                 <span>Total</span>
