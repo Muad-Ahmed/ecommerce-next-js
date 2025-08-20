@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { RootState } from "@/store/store";
+import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,11 +17,13 @@ const Cart = () => {
   const totalPrice = items
     .reduce((total, item) => total + item.quantity * item.price, 0)
     .toFixed(2);
-
   // Calculate vat (15%)
   const vat = (+totalPrice * 0.15).toFixed(2);
   // Total price with vat
   const totalPriceWithVat = (+totalPrice + +vat).toFixed(2);
+
+  // Get authenticate user
+  const { user } = useUser();
 
   return (
     <div className="mt-8 min-h-[60vh]">
@@ -122,6 +125,18 @@ const Cart = () => {
                 <span>Total</span>
                 <span>${totalPriceWithVat}</span>
               </div>
+
+              {!user && (
+                <Link href="/sign-in">
+                  <Button className="bg-orange-500 w-full">
+                    Sign In to Checkout
+                  </Button>
+                </Link>
+              )}
+              {user && (
+                // Paypal Button
+                <Button className="bg-orange-500 w-full">Paypal</Button>
+              )}
             </div>
           </div>
         </div>
