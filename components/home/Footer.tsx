@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
     <div className="pt-20 pb-12">
       {/* define grid system */}
@@ -53,7 +54,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 justify-between w-4/5 mx-auto">
         <p className="text-sm text-black opacity-60">
-          © Copyright webdevwarriors 2024
+          © NextShop. All rights reserved. {currentYear}
         </p>
         <Image
           src="/images/pay.svg"
