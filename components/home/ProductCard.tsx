@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Heart, ShoppingBag, StarIcon } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "@/store/cartSlice";
 import { toast } from "sonner";
 import { toggleFavorite } from "../../store/favsSlice";
+import { RootState } from "../../store/store";
 
 type Props = {
   product: Product;
@@ -31,10 +32,18 @@ const ProductCard = ({ product }: Props) => {
     toast.success("Item Added to Cart");
   };
 
+  //  Check if this product is in favorites
+  const favorites = useSelector((state: RootState) => state.favorites.items);
+  const isFavorite = favorites.some((item) => item.id === product.id);
+
   const toggleFavHandler = (product: Product) => {
     dispatch(toggleFavorite(product));
     // You can check if it's already there to show a dynamic toast
-    toast.info("Favorites Updated");
+    if (isFavorite) {
+      toast.error("Removed from Favorites");
+    } else {
+      toast.success("Added to Favorites");
+    }
   };
 
   return (
@@ -95,7 +104,11 @@ const ProductCard = ({ product }: Props) => {
           onClick={() => toggleFavHandler(product)}
           className="bg-red-500"
         >
-          <Heart size={18} />
+          <Heart
+            size={18}
+            fill={isFavorite ? "white" : "none"}
+            className={isFavorite ? "text-white" : "text-gray-200"}
+          />
         </Button>
       </div>
     </div>
