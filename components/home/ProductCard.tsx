@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addItem } from "@/store/cartSlice";
 import { toast } from "sonner";
+import { toggleFavorite } from "../../store/favsSlice";
 
 type Props = {
   product: Product;
@@ -28,7 +29,12 @@ const ProductCard = ({ product }: Props) => {
   const addToCartHandler = (product: Product) => {
     dispatch(addItem(product));
     toast.success("Item Added to Cart");
-   
+  };
+
+  const toggleFavHandler = (product: Product) => {
+    dispatch(toggleFavorite(product));
+    // You can check if it's already there to show a dynamic toast
+    toast.info("Favorites Updated");
   };
 
   return (
@@ -84,7 +90,11 @@ const ProductCard = ({ product }: Props) => {
         <Button size={"icon"} onClick={() => addToCartHandler(product)}>
           <ShoppingBag size={18} />
         </Button>
-        <Button size={"icon"} className="bg-red-500">
+        <Button
+          size={"icon"}
+          onClick={() => toggleFavHandler(product)}
+          className="bg-red-500"
+        >
           <Heart size={18} />
         </Button>
       </div>
