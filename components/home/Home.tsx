@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Category />
+      <Category id="category" />
       <AllProducts/>
     </>
   );

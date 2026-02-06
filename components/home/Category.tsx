@@ -1,10 +1,10 @@
 import { getAllCategories } from "@/request/requests";
 import React from "react";
 
-const Category = async () => {
+const Category = async ({ id }: { id?: string }) => {
   const categories: string[] = await getAllCategories();
   return (
-    <div className="pt-16 pb-12">
+    <div id={id} className="pt-16 pb-12 scroll-mt-20">
       <h1 className="text-center font-bold text-2xl capitalize">
         Shop by category
       </h1>

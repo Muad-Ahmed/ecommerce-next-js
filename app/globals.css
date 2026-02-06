@@ -8,8 +8,12 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @layer components {
-  .footer__title{
+  .footer__title {
     @apply text-xl text-black mb-6;
   }
   .footer__link {
