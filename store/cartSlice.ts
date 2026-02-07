@@ -18,8 +18,28 @@ interface CartState {
   items: CartItem[];
 }
 
+// --- Helper Functions for Manual LocalStorage ---
+
+const isClient = typeof window !== "undefined";
+
+const saveToLocalStorage = (items: CartItem[]) => {
+  if (isClient) {
+    localStorage.setItem("cart", JSON.stringify(items));
+  }
+};
+
+const getInitialItems = (): CartItem[] => {
+  if (isClient) {
+    const savedCart = localStorage.getItem("cart");
+    return savedCart ? JSON.parse(savedCart) : [];
+  }
+  return [];
+};
+
+// -----------------------------------------------
+
 const initialState: CartState = {
-  items: [],
+  items: getInitialItems(),
 };
 
 const cartSlice = createSlice({
@@ -30,12 +50,12 @@ const cartSlice = createSlice({
       const existingItem = state.items.find(
         (item) => item.id === action.payload.id,
       );
-
       if (existingItem) {
         existingItem.quantity += 1;
       } else {
         state.items.push({ ...action.payload, quantity: 1 });
       }
+      saveToLocalStorage(state.items); // Save manually
     },
 
     removeItem: (state, action: PayloadAction<{ id: number }>) => {
@@ -51,20 +71,28 @@ const cartSlice = createSlice({
           );
         }
       }
+      saveToLocalStorage(state.items); // Save manually
     },
+
     toggleCart: (state, action: PayloadAction<Product>) => {
       const index = state.items.findIndex(
         (item) => item.id === action.payload.id,
       );
-
       if (index >= 0) {
         state.items.splice(index, 1);
       } else {
-        state.items.push({ ...action.payload, quantity: 1 });
+        state.items.push({
+          // Casting Product to CartItem to satisfy TypeScript, quantity is added manually
+          ...(action.payload as unknown as CartItem),
+          quantity: 1,
+        });
       }
+      saveToLocalStorage(state.items); // Save manually
     },
+
     clearItems: (state) => {
       state.items = [];
+      saveToLocalStorage(state.items); // Save manually
     },
   },
 });
