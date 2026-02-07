@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -20,10 +21,14 @@ const Hero = () => {
             aperiam ad alias?
           </p>
           <div className="flex mt-6 items-center space-x-4">
-            <Button size={"lg"} className="bg-blue-700">
-              shop now
-            </Button>
-            <Button size={"lg"}>Explor More</Button>
+            <Link href="#category">
+              <Button size={"lg"} className="bg-blue-700">
+                shop now
+              </Button>
+            </Link>
+            <Link href="#category">
+              <Button size={"lg"}>Explor More</Button>
+            </Link>
           </div>
         </div>
         {/* Image content */}

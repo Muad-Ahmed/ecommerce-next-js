@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <>
       <Hero />
-      <Category />
-      <AllProducts/>
+      <Category id="category" />
+      <AllProducts />
     </>
   );
 };
