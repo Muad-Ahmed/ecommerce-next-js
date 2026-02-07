@@ -10,29 +10,16 @@ export async function getAllCategories(): Promise<string[]> {
     const categoryRes = await fetch(
       "https://fakestoreapi.com/products/categories",
       {
-        cache: "no-store",
-        headers: {
-          Accept: "application/json",
-        },
+        next: { revalidate: 3600 },
       },
     );
 
-    if (!categoryRes.ok) {
-      console.warn(
-        `API returned status ${categoryRes.status}, using fallbacks.`,
-      );
-      return defaultCategories;
-    }
+    if (!categoryRes.ok) return defaultCategories;
 
     const data = await categoryRes.json();
-
-    if (Array.isArray(data) && data.length > 0) {
-      return data;
-    }
-
-    return defaultCategories;
+    return Array.isArray(data) ? data : defaultCategories;
   } catch (error) {
-    console.error("Vercel Fetch Error:", error);
+    console.error("Fetch error:", error);
     return defaultCategories;
   }
 }

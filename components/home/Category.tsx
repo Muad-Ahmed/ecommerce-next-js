@@ -3,6 +3,7 @@ import React from "react";
 
 const Category = async ({ id }: { id: string }) => {
   const categories: string[] = await getAllCategories();
+  if (!categories || categories.length === 0) return null;
   return (
     <div id={id} className="pt-16 pb-12 scroll-mt-20">
       <h1 className="text-center font-bold text-2xl capitalize">
