@@ -5,8 +5,26 @@ interface FavsState {
   items: Product[];
 }
 
+// --- Manual LocalStorage Helpers ---
+const isClient = typeof window !== "undefined";
+
+const saveToLocalStorage = (items: Product[]) => {
+  if (isClient) {
+    localStorage.setItem("favorites", JSON.stringify(items));
+  }
+};
+
+const getInitialFavs = (): Product[] => {
+  if (isClient) {
+    const savedFavs = localStorage.getItem("favorites");
+    return savedFavs ? JSON.parse(savedFavs) : [];
+  }
+  return [];
+};
+// ----------------------------------
+
 const initialState: FavsState = {
-  items: [],
+  items: getInitialFavs(),
 };
 
 const favsSlice = createSlice({
@@ -22,6 +40,9 @@ const favsSlice = createSlice({
       } else {
         state.items.push(action.payload); // Add if not exists
       }
+
+      // Save manually to localStorage after each change
+      saveToLocalStorage(state.items);
     },
   },
 });
