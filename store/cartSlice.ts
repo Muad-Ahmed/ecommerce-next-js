@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Product } from "../typing";
 
 export interface CartItem {
   id: number;
@@ -27,7 +28,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
       const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload.id,
       );
 
       if (existingItem) {
@@ -39,24 +40,35 @@ const cartSlice = createSlice({
 
     removeItem: (state, action: PayloadAction<{ id: number }>) => {
       const existingItem = state.items.find(
-        (item) => item.id === action.payload.id
+        (item) => item.id === action.payload.id,
       );
       if (existingItem) {
         if (existingItem.quantity > 1) {
           existingItem.quantity -= 1;
         } else {
           state.items = state.items.filter(
-            (item) => item.id != action.payload.id
+            (item) => item.id != action.payload.id,
           );
         }
       }
     },
-    clearItems : (state) => {
-        state.items = [];
+    toggleCart: (state, action: PayloadAction<Product>) => {
+      const index = state.items.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+
+      if (index >= 0) {
+        state.items.splice(index, 1);
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
+    },
+    clearItems: (state) => {
+      state.items = [];
     },
   },
 });
 
-
-export const {addItem, removeItem, clearItems} = cartSlice.actions;
+export const { addItem, removeItem, clearItems, toggleCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;

@@ -13,15 +13,20 @@ const ShoppingCartButton = () => {
 
   return (
     <Sheet>
-      <SheetTrigger>
-        <div className="relative">
+      <SheetTrigger asChild>
+        <div className="relative group cursor-pointer transition-transform duration-200 active:scale-90">
           <span
             className="absolute -top-3 -right-3 w-6 h-6 bg-red-500 text-center 
-      flex items-center justify-center flex-col text-xs text-white rounded-full"
+              flex items-center justify-center text-xs text-white rounded-full font-bold
+              shadow-md z-10 transition-all duration-300 group-hover:bg-red-600"
           >
             {totalQuantity}
           </span>
-          <ShoppingBagIcon size={26} cursor={"pointer"} />
+
+          <ShoppingBagIcon
+            size={26}
+            className="transition-colors duration-200 group-hover:text-red-500"
+          />
         </div>
       </SheetTrigger>
       <SheetContent className="overflow-auto h-full">

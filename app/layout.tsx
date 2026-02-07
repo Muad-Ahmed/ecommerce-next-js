@@ -30,7 +30,18 @@ export default function RootLayout({
           <body className={`${inter.variable} antialiased`}>
             <Nav />
             {children}
-            <Toaster richColors />
+            <Toaster
+              richColors
+              toastOptions={{
+                style: {
+                  padding: "16px",
+                  borderRadius: "12px",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                },
+                className: "border-2",
+              }}
+            />
             <Footer />
           </body>
         </html>
