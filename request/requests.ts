@@ -1,37 +1,42 @@
 export async function getAllCategories() {
-  const categoryRes = await fetch(
-    "https://fakestoreapi.com/products/categories"
-  );
-  if (!categoryRes.ok) {
-        return []; 
-    }
-  return categoryRes.json();
-}
+  const defaultCategories = [
+    "electronics",
+    "jewelery",
+    "men's clothing",
+    "women's clothing",
+  ];
 
-export async function getAllProducts() {
-  const productsRes = await fetch("https://fakestoreapi.com/products");
-  if (!productsRes.ok) {
-        return []; 
-    }
-  return productsRes.json();
-}
+  try {
+    const categoryRes = await fetch(
+      "https://fakestoreapi.com/products/categories",
+    );
 
+    if (!categoryRes.ok) {
+      return defaultCategories;
+    }
+
+    return await categoryRes.json();
+  } catch (error) {
+    console.error("Fetch error:", error);
+    return defaultCategories;
+  }
+}
 export async function getSingleProduct(id: string) {
   const singleProductRes = await fetch(
-    `https://fakestoreapi.com/products/${id}`
+    `https://fakestoreapi.com/products/${id}`,
   );
   if (!singleProductRes.ok) {
-        return []; 
-    }
+    return [];
+  }
   return singleProductRes.json();
 }
 
 export async function getProductByCategory(category: string) {
   const productByCategoryRes = await fetch(
-    `https://fakestoreapi.com/products/category/${category}`
+    `https://fakestoreapi.com/products/category/${category}`,
   );
   if (!productByCategoryRes.ok) {
-        return []; 
-    }
+    return [];
+  }
   return productByCategoryRes.json();
 }
