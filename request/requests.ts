@@ -23,6 +23,25 @@ export async function getAllCategories(): Promise<string[]> {
     return defaultCategories;
   }
 }
+
+export async function getAllProducts() {
+  try {
+    const res = await fetch("https://fakestoreapi.com/products", {
+      next: { revalidate: 3600 },
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch products");
+      return [];
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Fetch products error:", error);
+    return [];
+  }
+}
+
 export async function getSingleProduct(id: string) {
   const singleProductRes = await fetch(
     `https://fakestoreapi.com/products/${id}`,
