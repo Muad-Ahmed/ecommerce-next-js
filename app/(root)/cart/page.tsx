@@ -6,35 +6,54 @@ import { RootState } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react"; // Added useEffect and useState
 import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
+  // Use isMounted state to prevent hydration mismatch between server and client
+  const [isMounted, setIsMounted] = useState(false);
   const dispatch = useDispatch();
-  // Get our cart items
+
+  // Get our cart items from Redux store
   const items = useSelector((rootState: RootState) => rootState.cart.items);
+
+  // Set mounted to true once the component is rendered in the browser
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Calculate total quantity
   const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
+
   // Calculate the total price
   const totalPrice = items
     .reduce((total, item) => total + item.quantity * item.price, 0)
     .toFixed(2);
+
   // Calculate vat (15%)
   const vat = (+totalPrice * 0.15).toFixed(2);
+
   // Total price with vat
   const totalPriceWithVat = (+totalPrice + +vat).toFixed(2);
 
-  // Get authenticate user
+  // Get authenticated user via Clerk
   const { user } = useUser();
 
-  // Add item
+  // Handler to add item quantity
   const addItemHandler = (item: CartItem) => {
     dispatch(addItem(item));
   };
-  // Remove item
+
+  // Handler to remove or decrease item quantity
   const removeItemHandler = (id: number) => {
     dispatch(removeItem({ id }));
   };
+
+  // If the component is not yet mounted, return a neutral placeholder
+  // to match the server-side initial HTML
+  if (!isMounted) {
+    return <div className="mt-8 min-h-[60vh]"></div>;
+  }
 
   return (
     <div className="mt-8 min-h-[60vh]">
@@ -54,21 +73,19 @@ const Cart = () => {
           </Link>
         </div>
       )}
-      {/* If cart item exist  */}
+
+      {/* If cart items exist render the list and summary */}
       {items.length > 0 && (
         <div className="md:w-4/5 w-[95%] mx-auto grid grid-cols-1 xl:grid-cols-6 gap-16">
-          {/* Cart Items */}
+          {/* Cart Items List */}
           <div className="rounded-lg shadow-md overflow-hidden xl:col-span-4">
-            <h1 className="p-4 text-xl mb-5  md:text-2xl font-bold text-white bg-blue-700">
+            <h1 className="p-4 text-xl mb-5 md:text-2xl font-bold text-white bg-blue-700">
               Your Cart ({totalQuantity} Items)
             </h1>
             {items.map((item) => {
               return (
                 <div key={item.id}>
-                  <div
-                    className="flex items-center pb-6 mt-2 p-5 border-b-[1.5px] border-opacity-25
-                   border-gray-700 space-x-10"
-                  >
+                  <div className="flex items-center pb-6 mt-2 p-5 border-b-[1.5px] border-opacity-25 border-gray-700 space-x-10">
                     <div>
                       <Image
                         src={item.image}
@@ -84,12 +101,13 @@ const Cart = () => {
                       <h1 className="md:text-base mt-1 text-xs font-semibold">
                         Category : {item.category}
                       </h1>
-                      <h1 className="md:text-xl  mt-1 text-base font-bold text-blue-950">
+                      <h1 className="md:text-xl mt-1 text-base font-bold text-blue-950">
                         ${item.price}
                       </h1>
-                      <h1 className="md:text-base  mt-1 text-xs font-semibold">
+                      <h1 className="md:text-base mt-1 text-xs font-semibold">
                         Quantity : {item.quantity}
                       </h1>
+
                       <div className="flex items-center mt-3 space-x-2">
                         <Button onClick={() => addItemHandler(item)}>
                           Add More
@@ -107,39 +125,30 @@ const Cart = () => {
               );
             })}
           </div>
-          {/* Cart summary */}
+
+          {/* Cart Summary Section */}
           <div className="xl:col-span-2">
             <div className="bg-indigo-950 sticky top-[25vh] p-6 rounded-lg">
               <h1 className="text-center mt-8 mb-8 text-white text-3xl font-semibold">
                 Summary
               </h1>
               <div className="w-full h-[1.2px] bg-white bg-opacity-20"></div>
-              <div
-                className="flex mt-4 text-lg uppercase font-semibold text-white items-center
-                justify-between"
-              >
+
+              <div className="flex mt-4 text-lg uppercase font-semibold text-white items-center justify-between">
                 <span>Subtotal</span>
                 <span>${totalPrice}</span>
               </div>
-              <div
-                className="flex mt-7 mb-7 text-lg uppercase font-semibold text-white items-center
-                justify-between"
-              >
+              <div className="flex mt-7 mb-7 text-lg uppercase font-semibold text-white items-center justify-between">
                 <span>Vat</span>
                 <span>${vat}</span>
               </div>
-              <div
-                className="flex mt-6 mb-4 text-lg uppercase font-semibold text-white items-center
-                justify-between"
-              >
+              <div className="flex mt-6 mb-4 text-lg uppercase font-semibold text-white items-center justify-between">
                 <span>Shipping</span>
                 <span>Free</span>
               </div>
+
               <div className="w-full h-[1.2px] bg-white bg-opacity-20"></div>
-              <div
-                className="flex mt-6 mb-6 text-lg uppercase font-semibold text-white items-center
-                justify-between"
-              >
+              <div className="flex mt-6 mb-6 text-lg uppercase font-semibold text-white items-center justify-between">
                 <span>Total</span>
                 <span>${totalPriceWithVat}</span>
               </div>
@@ -151,10 +160,7 @@ const Cart = () => {
                   </Button>
                 </Link>
               )}
-              {user && (
-                // Paypal Button
-                <Button className="bg-orange-500 w-full">Paypal</Button>
-              )}
+              {user && <Button className="bg-orange-500 w-full">Paypal</Button>}
             </div>
           </div>
         </div>
