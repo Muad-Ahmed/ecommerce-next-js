@@ -22,12 +22,18 @@ const AllProducts = () => {
     };
     getData();
   }, []);
+
   return (
-    <div className="pt-16 pb-12">
-      <h1 className="text-center font-bold text-2xl">All Products</h1>
+    <div className="pt-16 pb-12 relative">
+      <div className="max-w-[250px] mx-auto bg-white/20 backdrop-blur-sm border border-white/30 py-2 rounded-full shadow-sm mb-8">
+        <h1 className="text-center font-bold text-2xl text-gray-800 uppercase tracking-wider">All Products</h1>
+      </div>
+
       {loading ? (
-        <div className="flex justify-center items-center mt-16">
-          <Loader size={32} className="animate-spin" />
+        <div className="flex justify-center items-center mt-32">
+          <div className="p-4 bg-white/30 backdrop-blur-md rounded-full border border-white/40 shadow-xl">
+            <Loader size={40} className="animate-spin text-blue-600" />
+          </div>
         </div>
       ) : (
         <div

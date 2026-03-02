@@ -9,11 +9,11 @@ import FavoritesButton from "../helper/FavoritesButton";
 
 const Nav = () => {
   return (
-    <div className="h-[12vh] sticky top-0 z-[1] bg-white shadow-md ">
+    <div className="h-[12vh] sticky top-0 z-[50] bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-lg">
       <div className="flex items-center justify-between w-[95%] md:w-4/5 mx-auto h-full">
         {/* Logo */}
         <Link href="/">
-          <Image src="/images/logo.png" alt="logo" width={140} height={140} />
+          <Image src="/images/logo.png" alt="logo" width={140} height={140} className="brightness-110" />
         </Link>
         <div className="flex items-center space-x-6">
           <SearchBox /> {/*Component*/}
@@ -28,7 +28,7 @@ const Nav = () => {
           {/*▼ Not SignIn ▼ */}
           <SignedOut>
             <SignInButton>
-              <UserIcon size={26} cursor={"pointer"} />
+              <UserIcon size={26} cursor={"pointer"} className="text-gray-800 hover:text-black transition-colors" />
             </SignInButton>
           </SignedOut>
           {/*▲ Not SignIn  ▲*/}

@@ -15,7 +15,6 @@ type Props = {
   product: Product;
 };
 
-// Normalizing image URLs for compatibility with fakestoreapi changes
 function normalizeImageUrl(url: string) {
   if (url.includes("_t.png")) return url;
   return url.replace(/_?\.(jpe?g|png)$/i, "_t.png");
@@ -27,11 +26,9 @@ const ProductCard = ({ product }: Props) => {
 
   const dispatch = useDispatch();
 
-  // 1. Favorites Logic (Check if item exists)
   const favorites = useSelector((state: RootState) => state.favorites.items);
   const isFavorite = favorites.some((item) => item.id === product.id);
 
-  // 2. Cart Logic (Check if item exists)
   const cartItems = useSelector((state: RootState) => state.cart.items);
   const isInCart = cartItems.some((item) => item.id === product.id);
 
@@ -54,88 +51,85 @@ const ProductCard = ({ product }: Props) => {
   };
 
   return (
-    <div className="p-4 border rounded-lg hover:shadow-lg transition-all duration-300">
-      {/* Product Image */}
-      <div className="w-[200px] h-[150px] mx-auto overflow-hidden">
-        <Image
-          src={src}
-          alt={product.title}
-          width={100}
-          height={100}
-          className="w-full h-full object-contain"
-          onError={() => setSrc(product.image)}
-        />
-      </div>
-
-      {/* Product Category */}
-      <p className="mt-5 text-xs capitalize text-gray-600">
-        {product.category}
-      </p>
-
-      {/* Product Title */}
-      <Link href={`/product/product-details/${product.id}`}>
-        <h1 className="text-lg cursor-pointer hover:text-blue-900 transition-all hover:underline sm:w-full sm:truncate mt-2 text-black font-semibold">
-          {product.title}
-        </h1>
-      </Link>
-
-      {/* Rating Stars */}
-      <div className="flex items-center">
-        {ratingArry.map((_, i) => (
-          <StarIcon
-            key={i}
-            size={16}
-            fill="yellow"
-            className="text-yellow-500"
+    <div className="p-5 bg-white/60 backdrop-blur-xl border border-white shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] rounded-2xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 group flex flex-col justify-between h-full">
+      <div>
+        {/* Product Image Container */}
+        <div className="w-full h-[180px] bg-white rounded-xl overflow-hidden relative group-hover:scale-95 transition-transform duration-500 shadow-sm border border-gray-50">
+          <Image
+            src={src}
+            alt={product.title}
+            fill
+            className="object-contain p-4 drop-shadow-sm"
+            onError={() => setSrc(product.image)}
           />
-        ))}
+        </div>
+
+        {/* Product Category */}
+        <p className="mt-5 text-[10px] uppercase tracking-widest font-bold text-gray-400">
+          {product.category}
+        </p>
+
+        {/* Product Title */}
+        <Link href={`/product/product-details/${product.id}`}>
+          <h1 className="text-md cursor-pointer hover:text-blue-700 transition-all sm:w-full sm:truncate mt-1 text-gray-800 font-bold">
+            {product.title}
+          </h1>
+        </Link>
+
+        {/* Rating Stars */}
+        <div className="flex items-center mt-2 space-x-0.5">
+          {ratingArry.map((_, i) => (
+            <StarIcon
+              key={i}
+              size={14}
+              fill="#f59e0b"
+              className="text-amber-500"
+            />
+          ))}
+          <span className="text-[10px] text-gray-400 ml-2">
+            ({product.rating?.count})
+          </span>
+        </div>
       </div>
 
-      {/* Pricing Section */}
-      <div className="flex mt-2 items-center space-x-2">
-        <p className="text-black text-base line-through font-semibold opacity-50">
-          {`$${(product.price + 10).toFixed(2)}`}
-        </p>
-        <p className="text-black text-lg font-bold opacity-80">
-          ${product.price}
-        </p>
-      </div>
+      <div>
+        {/* Pricing Section */}
+        <div className="flex mt-4 items-baseline space-x-2">
+          <p className="text-gray-900 text-xl font-black">${product.price}</p>
+          <p className="text-gray-400 text-sm line-through font-medium italic">
+            {`$${(product.price + 10).toFixed(2)}`}
+          </p>
+        </div>
 
-      {/* Action Buttons */}
-      <div className="mt-4 flex items-center space-x-2">
-        {/* Cart Button with Enhanced Dynamic Styling */}
-        <Button
-          size={"icon"}
-          onClick={handleCartClick}
-          variant="ghost"
-          className={`transition-all duration-300 active:scale-95 shadow-md border ${
-            !isInCart
-              ? "!bg-[#001f3f] hover:!bg-[#002d5b] border-[#001f3f]"
-              : "!bg-red-100 hover:!bg-red-200 border-red-200 shadow-inner"
-          }`}
-        >
-          <ShoppingBag
-            size={18}
-            className={`transition-colors duration-300 ${
-              isInCart
-                ? "text-red-600 stroke-[2.5px]"
-                : "text-white stroke-[2px]"
+        {/* Action Buttons */}
+        <div className="mt-5 flex items-center space-x-3">
+          <Button
+            size={"icon"}
+            onClick={handleCartClick}
+            className={`flex-1 flex items-center justify-center gap-2 transition-all duration-300 rounded-xl shadow-md border ${
+              !isInCart
+                ? "bg-gray-900 hover:bg-black border-gray-800 text-white"
+                : "bg-red-500/90 hover:bg-red-600 border-red-400/30 text-white"
             }`}
-          />
-        </Button>
+          >
+            <ShoppingBag size={18} />
+            <span className="text-xs font-bold uppercase">
+              {isInCart ? "Remove" : "Add"}
+            </span>
+          </Button>
 
-        {/* Favorite Button */}
-        <Button
-          size={"icon"}
-          onClick={() => toggleFavHandler(product)}
-          className="bg-red-500 hover:bg-red-600 transition-all duration-300 active:scale-90"
-        >
-          <Heart
-            size={18}
-            fill={isFavorite ? "white" : "none"}
-            className={isFavorite ? "text-white" : "text-gray-200"}
-          />
-        </Button>
+          <Button
+            size={"icon"}
+            onClick={() => toggleFavHandler(product)}
+            className={`w-12 h-10 rounded-xl transition-all duration-300 shadow-sm border ${
+              isFavorite
+                ? "bg-rose-50 border-rose-100 text-rose-500"
+                : "bg-gray-50 border-gray-100 text-gray-400 hover:text-rose-500 hover:bg-rose-50"
+            }`}
+          >
+            <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+          </Button>
+        </div>
       </div>
     </div>
   );

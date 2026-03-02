@@ -160,7 +160,7 @@ const Cart = () => {
                   </Button>
                 </Link>
               )}
-              {user && <Button className="bg-orange-500 w-full">Paypal</Button>}
+              {user && <Button className="bg-orange-500 w-full" disabled={true}>Paypal</Button>}
             </div>
           </div>
         </div>
