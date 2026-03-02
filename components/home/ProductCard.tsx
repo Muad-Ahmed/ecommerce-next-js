@@ -51,7 +51,7 @@ const ProductCard = ({ product }: Props) => {
   };
 
   return (
-    <div className="p-5 bg-white/60 backdrop-blur-xl border border-white shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] rounded-2xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 group flex flex-col justify-between h-full">
+    <div className="p-5 bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.1)] rounded-2xl hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] transition-all duration-500 group flex flex-col justify-between h-full">
       <div>
         {/* Product Image Container */}
         <div className="w-full h-[180px] bg-white rounded-xl overflow-hidden relative group-hover:scale-95 transition-transform duration-500 shadow-sm border border-gray-50">
