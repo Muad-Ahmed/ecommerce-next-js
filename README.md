@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WDW Shop - Modern Next.js 14 E-commerce Platform 🚀
 
-## Getting Started
+WDW Shop is a high-performance, fully responsive e-commerce web application built with **Next.js 14**, **Redux Toolkit**, and **Clerk**. It features a sleek, modern design with a seamless user experience, including advanced authentication, shopping cart management, and product filtering.
 
-First, run the development server:
+---
 
+## ✨ Features
+-  **Secure Authentication:** Integrated sign-in and sign-up flows powered by Clerk.
+-  **Dynamic Shopping Cart:** Real-time state management for items, quantities, and price totals using Redux.
+-  **Persistent Wishlist:** Add and remove favorite products with ease.
+-  **Real-time Search:** Instantly find products by title using the optimized search interface.
+-  **Category Filtering:** Browse specific product collections like electronics, jewelry, and clothing.
+-  **Responsive Design:** Optimized for all screen sizes (Mobile, Tablet, and Desktop) using Tailwind CSS.
+-  **Performance Optimized:** Utilization of Next.js Server Components, Image Optimization, and App Router for superior speed.
+-  **Modern UI/UX:** Clean, elegant interface using Shadcn UI (Radix UI) and Lucide icons.
+
+---
+
+## 🛠️ Built With (Tech Stack)
+- **Framework:** [Next.js 14](https://nextjs.org/) (App Router & Server Actions)
+- **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Auth Provider:** [Clerk](https://clerk.com/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components:** [Radix UI](https://www.radix-ui.com/) (Shadcn UI style)
+- **Icons:** [Lucide-React](https://lucide.dev/)
+- **Toast Notifications:** [Sonner](https://sonner.stevenly.me/)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Installation
+Clone the repository and install the dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Muad-Ahmed/ecommerce-next-js.git
+cd ecommerce-next-js
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Environment Variables
+Create a `.env.local` file in the project's root directory and include your Clerk API keys:
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Development Server
+Start the application locally:
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to explore the shop.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📂 Project Structure
+- **/app**: Core application logic, routing, and page layouts (App Router).
+- **/components**: Reusable UI components categorized into Home, Base UI, and Helpers.
+- **/store**: Global state management configuration and slices for Cart and Favorites.
+- **/lib**: Utility functions and shared helpers.
+- **/request**: Centralized API fetching logic for products and categories.
+- **/public**: Static assets including brand assets and optimized images.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Developed By
+**Muad Ahmed**
+- GitHub: [Muad-Ahmed](https://github.com/Muad-Ahmed)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*If you find this project helpful, please consider giving it a ⭐!*
