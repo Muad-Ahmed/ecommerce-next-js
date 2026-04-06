@@ -31,10 +31,10 @@ const Footer = () => {
           <h1 className="text-gray-900 font-bold mb-6 text-lg">Information</h1>
           <div className="space-y-3">
             <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">About us</p>
-            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Privacy Police</p>
-            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Return Police</p>
+            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Privacy Policy</p>
+            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Return Policy</p>
             <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Dropshipping</p>
-            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Shipping Police</p>
+            <p className="text-gray-600 hover:text-blue-600 cursor-pointer transition-colors text-sm">Shipping Policy</p>
           </div>
         </div>
 

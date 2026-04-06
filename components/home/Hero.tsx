@@ -34,7 +34,7 @@ const Hero = () => {
                 size={"lg"}
                 className="bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-black/10 text-black"
               >
-                Explor More
+                Explore More
               </Button>
             </Link>
           </div>

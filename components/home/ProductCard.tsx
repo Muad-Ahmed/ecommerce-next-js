@@ -22,7 +22,7 @@ function normalizeImageUrl(url: string) {
 
 const ProductCard = ({ product }: Props) => {
   const [src, setSrc] = useState(() => normalizeImageUrl(product.image));
-  const ratingArry = Array(Math.round(product.rating?.rate || 0)).fill(0);
+  const ratingArray = Array(Math.round(product.rating?.rate || 0)).fill(0);
 
   const dispatch = useDispatch();
 
@@ -78,7 +78,7 @@ const ProductCard = ({ product }: Props) => {
 
         {/* Rating Stars */}
         <div className="flex items-center mt-2 space-x-0.5">
-          {ratingArry.map((_, i) => (
+          {ratingArray.map((_, i) => (
             <StarIcon
               key={i}
               size={14}

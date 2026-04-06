@@ -20,7 +20,7 @@ const CartSidebar = ({ items }: Props) => {
     <div className="mt-6 h-full mb-6">
       {/* Heading */}
       <h1 className="text-center font-bold text-lg mb-6">Your Cart</h1>
-      {/* If there is no items */}
+      {/* If there are no items */}
       {items.length == 0 && (
         <div className="flex items-center w-full h-[80vh] flex-col justify-center">
           <Image
